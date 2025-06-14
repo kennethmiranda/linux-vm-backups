@@ -22,8 +22,12 @@ Open VirtualBox → Click New
   - Name: LinuxVM
 
   - Type: Linux
+  
+  - Subtype: Ubuntu 
 
   - Version: Ubuntu (64-bit)
+
+  _image_
 
 Allocate resources:
 
@@ -33,9 +37,19 @@ Allocate resources:
 
   - Disk: 25 GB (dynamically allocated)
 
+  _image_
+
+  _image_
+
 Mount the Ubuntu 24.04.2 ISO and start the VM
 
-Complete the Ubuntu installation (set a username and password)
+_image_
+
+_image(install1)_
+
+Complete the Ubuntu installation, set machine name to LinuxVM, and create username and password
+
+_image_
 
 ---
 
@@ -73,6 +87,8 @@ Enable Shared Clipboard & Drag-and-Drop by Installing Guest Additions:
     - Shared Clipboard: Bidirectional
 
     - Drag and Drop: Bidirectional
+ 
+    _image_
 
 ---
 
