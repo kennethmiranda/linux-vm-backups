@@ -176,13 +176,13 @@ tar -tzf ~/backups/backup_LinuxVM_DATE.tar.gz
 
 ## 📁 4. Sample Test Files
 
-To make it easier to visualize and understand the backup script, we will create a smaller version:
+To make it easier to visualize and understand the backup script, we will create a smaller test version:
 
 ```
 nano ~/test_backup.sh
 ```
 
-This bash script will create test files: Documents/test.txt and projects/code.txt and create backups in /home/user/test_backup_source:
+This bash script will create test files: Documents/test.txt and projects/code.txt and store the backups in /home/user/test_backup_source:
 
 ```
 #!/bin/bash
