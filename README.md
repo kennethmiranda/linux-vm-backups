@@ -1,0 +1,233 @@
+# 🛡️ Linux VM Data Backup Automation with Bash
+
+This project demonstrates how to automate daily backups of Linux user data and system configuration using Bash scripts on an Ubuntu virtual machine. It's designed for IT Support professionals to practice scripting and data protection fundamentals in a lab environment.
+
+---
+
+## 🧰 Prerequisites
+
+- [Oracle VirtualBox](https://www.virtualbox.org/wiki/Downloads) (Download Platform Package and Extension Pack)
+- Ubuntu ISO file: [Ubuntu Desktop 24.04.2 LTS](https://ubuntu.com/download/desktop)
+- A Windows or macOS host system
+- [Batch Backup Script]
+
+---
+
+## 💻 1. Setup Oracle VirtualBox + Ubuntu VM
+
+- Download and install Oracle VirtualBox on your host system.
+
+- Open VirtualBox → Click New
+
+  - Name: LinuxVM
+
+  - Type: Linux
+
+  - Version: Ubuntu (64-bit)
+
+- Allocate resources:
+
+  - RAM: At least 2048 MB
+
+  - CPU: 2 cores
+
+  - Disk: 25 GB (dynamically allocated)
+
+- Mount the Ubuntu 24.04.2 ISO and start the VM
+
+- Complete the Ubuntu installation (set a username and password)
+
+---
+
+## 🛠️ 2. Initial Ubuntu Setup
+Log into your Ubuntu VM
+
+Open Terminal and update the system:
+
+```
+sudo apt update && sudo apt upgrade -y
+```
+
+Install essential tools:
+
+```
+sudo apt install curl net-tools tree -y
+```
+
+---
+
+## 📝 3. Write the Backup Script
+
+Create and open the script file:
+
+```
+nano ~/backup.sh
+```
+
+Paste the following:
+
+```
+#!/bin/bash
+
+DATE=$(date +"%Y-%m-%d_%H-%M-%S")
+HOSTNAME=$(hostname)
+FILENAME="backup_${HOSTNAME}_${DATE}.tar.gz"
+BACKUP_DIR="$HOME/backups"
+RETENTION_DAYS=7
+LOG_TAG="vm-backup"
+
+# Specific files/folders you want to back up
+SPECIFIC_DIRS=(
+  "$HOME/Documents"
+  "$HOME/Desktop"
+  "$HOME/.config"
+  "$HOME/projects"
+  "/etc"
+)
+
+# Dynamically include all real user home directories
+USER_HOMES=($(awk -F: '$3 >= 1000 && $7 ~ /bash|sh/ { print $6 }' /etc/passwd))
+
+# Combine both
+SOURCE_DIRS=("${SPECIFIC_DIRS[@]}" "${USER_HOMES[@]}")
+
+# Create backup directory if it doesn’t exist
+mkdir -p "$BACKUP_DIR"
+
+# Create the archive
+tar -czf "$BACKUP_DIR/$FILENAME" "${SOURCE_DIRS[@]}"
+
+# Log result
+logger -t "$LOG_TAG" "Backup created: $BACKUP_DIR/$FILENAME"
+
+# Delete old backups
+find "$BACKUP_DIR" -name "*.tar.gz" -type f -mtime +$RETENTION_DAYS -exec rm {} \;
+logger -t "$LOG_TAG" "Old backups older than $RETENTION_DAYS days deleted"
+
+echo "Backup complete: $FILENAME"
+```
+
+Make the script executable:
+
+```
+chmod +x backup.sh
+```
+
+Run it manually:
+
+```
+./backup.sh
+```
+
+Check that the backup archive appears in the ~/backups/ directory:
+
+```
+ls -lh ~/backups
+```
+
+Extract a backup to verify its contents:
+
+tar -xvzf ~/backups/backup_YOURVMNAME_DATE.tar.gz -C ~/restore_test/
+
+---
+
+## ⏰ 4. Automate with Cron
+
+Open the crontab editor:
+
+```
+crontab -e
+```
+
+Add this line to schedule the backup every day at 1:00 AM:
+
+```
+0 1 * * * /home/YOURUSERNAME/linux_vm_backups/backup.sh
+```
+
+Replace `YOURUSERNAME` with your actual Linux user.
+
+---
+
+## 📁 5. Sample Test Files
+
+Create and open the script file:
+
+```
+nano ~/test_backup.sh
+```
+
+Paste the following:
+
+```
+#!/bin/bash
+
+DATE=$(date +"%Y-%m-%d_%H-%M-%S")
+HOSTNAME=$(hostname)
+FILENAME="test_backup_${HOSTNAME}_${DATE}.tar.gz"
+BACKUP_DIR="$HOME/backups"
+RETENTION_DAYS=7
+LOG_TAG="vm-backup"
+
+# Temporary test-only directories
+TEST_BACKUP_SOURCE="$HOME/test_backup_source"
+mkdir -p "$TEST_BACKUP_SOURCE/Documents"
+mkdir -p "$TEST_BACKUP_SOURCE/projects"
+
+echo "Test doc content" > "$TEST_BACKUP_SOURCE/Documents/test.txt"
+echo "Project backup check" > "$TEST_BACKUP_SOURCE/projects/code.txt"
+
+SPECIFIC_DIRS=(
+  "$TEST_BACKUP_SOURCE"
+)
+
+SOURCE_DIRS=("${SPECIFIC_DIRS[@]}")
+
+# Create backup directory if it doesn’t exist
+mkdir -p "$BACKUP_DIR"
+
+# Create the archive
+tar -czf "$BACKUP_DIR/$FILENAME" "${SOURCE_DIRS[@]}"
+
+# Log result
+logger -t "$LOG_TAG" "Test Backup created: $BACKUP_DIR/$FILENAME"
+
+# Delete old backups
+find "$BACKUP_DIR" -name "*.tar.gz" -type f -mtime +$RETENTION_DAYS -exec rm {} \;
+logger -t "$LOG_TAG" "Old backups older than $RETENTION_DAYS days deleted"
+
+echo "Test Backup complete: $FILENAME"
+```
+
+Make the script executable:
+
+```
+chmod +x test_backup.sh
+```
+
+Run it manually:
+
+```
+./test_backup.sh
+```
+
+Inspect the archive contents:
+
+```
+tar -tzf ~/backups/backup_YOURVMNAME_DATE.tar.gz
+```
+
+---
+
+## 🧾 7. Log Output
+
+Use journalctl to review log messages tagged with vm-backup:
+
+```
+journalctl -t vm-backup
+```
+
+---
+
+[![Email](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:kennymiranda000@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/kenneth-miranda-xyz)
