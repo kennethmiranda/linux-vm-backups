@@ -7,15 +7,6 @@ BACKUP_DIR="$HOME/backups"
 RETENTION_DAYS=7
 LOG_TAG="vm-backup"
 
-# Specific files/folders you want to back up
-# SPECIFIC_DIRS=(
-#  "$HOME/Documents"
-#  "$HOME/Desktop"
-#  "$HOME/.config"
-#  "$HOME/projects"
-#  "/etc"
-#)
-
 # Temporary test-only directories
 TEST_BACKUP_SOURCE="$HOME/test_backup_source"
 mkdir -p "$TEST_BACKUP_SOURCE/Documents"
@@ -28,12 +19,6 @@ SPECIFIC_DIRS=(
   "$TEST_BACKUP_SOURCE"
 )
 
-
-# Dynamically include all real user home directories
-# USER_HOMES=($(awk -F: '$3 >= 1000 && $7 ~ /bash|sh/ { print $6 }' /etc/passwd))
-
-# Combine both
-# SOURCE_DIRS=("${SPECIFIC_DIRS[@]}" "${USER_HOMES[@]}")
 SOURCE_DIRS=("${SPECIFIC_DIRS[@]}")
 
 # Create backup directory if it doesn’t exist
