@@ -260,8 +260,9 @@ crontab -e
 Add this line to schedule the backup every day at 1:00 AM:
 
 ```
-0 1 * * * /home/YOURUSERNAME/linux_vm_backups/backup.sh
+0 1 * * * /path/to/your/backup.sh
 ```
+Path example: /home/YOURUSERNAME/backup.sh
 
 Replace `YOURUSERNAME` with your actual Linux user.
 
