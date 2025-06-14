@@ -9,7 +9,7 @@ This project demonstrates how to automate daily backups of Linux user data and s
 - [Oracle VirtualBox](https://www.virtualbox.org/wiki/Downloads) (Download Platform Package and Extension Pack)
 - Ubuntu ISO file: [Ubuntu Desktop 24.04.2 LTS](https://ubuntu.com/download/desktop)
 - A Windows or macOS host system
-- [Batch Backup Script]
+- [Batch Backup Script] & [Test Batch Backup Script]
 
 ---
 
@@ -48,10 +48,12 @@ Open Terminal and update the system:
 sudo apt update && sudo apt upgrade -y
 ```
 
-Install essential tools:
+_image_
+
+(Optional) Install essential tools:
 
 ```
-sudo apt install curl net-tools tree -y
+sudo apt install git curl wget net-tools tree -y
 ```
 
 ---
@@ -107,6 +109,8 @@ logger -t "$LOG_TAG" "Old backups older than $RETENTION_DAYS days deleted"
 echo "Backup complete: $FILENAME"
 ```
 
+_image_
+
 Make the script executable:
 
 ```
@@ -125,21 +129,28 @@ Check that the backup archive appears in the ~/backups/ directory:
 ls -lh ~/backups
 ```
 
-Extract a backup to verify its contents:
+_image_
 
-tar -xvzf ~/backups/backup_YOURVMNAME_DATE.tar.gz -C ~/restore_test/
+If you want to inspect the archive contents (hard to read as there are too many files/directories saved):
+
+```
+tar -tzf ~/backups/backup_LinuxVM_DATE.tar.gz
+```
+(After typing backup you can press tab and it will autofill the rest for you)
+
+_image_
 
 ---
 
 ## 📁 4. Sample Test Files
 
-Create and open the script file:
+To make it easier to visualize and understand the backup script, we will create a smaller version:
 
 ```
 nano ~/test_backup.sh
 ```
 
-Paste the following:
+This bash script will create test files: Documents/test.txt and projects/code.txt and create backups in /home/user/test_backup_source:
 
 ```
 #!/bin/bash
@@ -181,6 +192,8 @@ logger -t "$LOG_TAG" "Old backups older than $RETENTION_DAYS days deleted"
 echo "Test Backup complete: $FILENAME"
 ```
 
+_image_
+
 Make the script executable:
 
 ```
@@ -196,8 +209,11 @@ Run it manually:
 Inspect the archive contents:
 
 ```
-tar -tzf ~/backups/backup_YOURVMNAME_DATE.tar.gz
+tar -tzf ~/backups/test_backup_LinuxVM_DATE.tar.gz
 ```
+(After typing test_backup you can press tab and it will autofill the rest for you)
+
+_image_
 
 ---
 
@@ -217,6 +233,8 @@ Add this line to schedule the backup every day at 1:00 AM:
 
 Replace `YOURUSERNAME` with your actual Linux user.
 
+_image_
+
 ---
 
 ## 🧾 6. Log Output
@@ -226,6 +244,8 @@ Use journalctl to review log messages tagged with vm-backup:
 ```
 journalctl | grep vm-backup
 ```
+
+_image_
 
 ---
 
