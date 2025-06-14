@@ -224,7 +224,7 @@ tar -tzf ~/backups/backup_YOURVMNAME_DATE.tar.gz
 Use journalctl to review log messages tagged with vm-backup:
 
 ```
-journalctl -t vm-backup
+journalctl | grep vm-backup
 ```
 
 ---
