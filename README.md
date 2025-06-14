@@ -131,25 +131,7 @@ tar -xvzf ~/backups/backup_YOURVMNAME_DATE.tar.gz -C ~/restore_test/
 
 ---
 
-## ⏰ 4. Automate with Cron
-
-Open the crontab editor:
-
-```
-crontab -e
-```
-
-Add this line to schedule the backup every day at 1:00 AM:
-
-```
-0 1 * * * /home/YOURUSERNAME/linux_vm_backups/backup.sh
-```
-
-Replace `YOURUSERNAME` with your actual Linux user.
-
----
-
-## 📁 5. Sample Test Files
+## 📁 4. Sample Test Files
 
 Create and open the script file:
 
@@ -219,7 +201,25 @@ tar -tzf ~/backups/backup_YOURVMNAME_DATE.tar.gz
 
 ---
 
-## 🧾 7. Log Output
+## ⏰ 5. Automate with Cron
+
+Open the crontab editor:
+
+```
+crontab -e
+```
+
+Add this line to schedule the backup every day at 1:00 AM:
+
+```
+0 1 * * * /home/YOURUSERNAME/linux_vm_backups/backup.sh
+```
+
+Replace `YOURUSERNAME` with your actual Linux user.
+
+---
+
+## 🧾 6. Log Output
 
 Use journalctl to review log messages tagged with vm-backup:
 
