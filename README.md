@@ -257,7 +257,7 @@ Open the crontab editor:
 crontab -e
 ```
 
-Add this line to schedule the backup every day at 1:00 AM:
+Add this line to schedule the backup every day at 1:00 AM and save:
 
 ```
 0 1 * * * /path/to/your/backup.sh
