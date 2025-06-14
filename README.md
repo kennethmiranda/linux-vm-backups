@@ -15,9 +15,9 @@ This project demonstrates how to automate daily backups of Linux user data and s
 
 ## 💻 1. Setup Oracle VirtualBox + Ubuntu VM
 
-- Download and install Oracle VirtualBox on your host system.
+Download and install Oracle VirtualBox on your host system.
 
-- Open VirtualBox → Click New
+Open VirtualBox → Click New
 
   - Name: LinuxVM
 
@@ -25,7 +25,7 @@ This project demonstrates how to automate daily backups of Linux user data and s
 
   - Version: Ubuntu (64-bit)
 
-- Allocate resources:
+Allocate resources:
 
   - RAM: At least 2048 MB
 
@@ -33,9 +33,9 @@ This project demonstrates how to automate daily backups of Linux user data and s
 
   - Disk: 25 GB (dynamically allocated)
 
-- Mount the Ubuntu 24.04.2 ISO and start the VM
+Mount the Ubuntu 24.04.2 ISO and start the VM
 
-- Complete the Ubuntu installation (set a username and password)
+Complete the Ubuntu installation (set a username and password)
 
 ---
 
@@ -55,6 +55,26 @@ _image_
 ```
 sudo apt install git curl wget net-tools tree -y
 ```
+
+Enable Shared Clipboard & Drag-and-Drop
+
+- Install Guest Additions:
+
+- From VirtualBox menu bar: Devices > Insert Guest Additions CD image…
+
+- Run autorun.sh and install anything missing
+
+  ```
+  sudo apt install build-essential dkms linux-headers-$(uname -r)
+  ```
+
+- Reboot the VM.
+
+- Enable clipboard & drag-and-drop in VM Settings → General > Advanced:
+
+    - Shared Clipboard: Bidirectional
+
+    - Drag and Drop: Bidirectional
 
 ---
 
