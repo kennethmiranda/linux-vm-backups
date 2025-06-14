@@ -56,9 +56,7 @@ _image_
 sudo apt install git curl wget net-tools tree -y
 ```
 
-Enable Shared Clipboard & Drag-and-Drop
-
-- Install Guest Additions:
+Enable Shared Clipboard & Drag-and-Drop by Installing Guest Additions:
 
 - From VirtualBox menu bar: Devices > Insert Guest Additions CD image…
 
