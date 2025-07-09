@@ -1,4 +1,4 @@
-# 💾 Linux Bash Data Backups Automation in Linux VirtualBox VM
+# 💾 Linux Bash Automation Scripts | (Ubuntu VM)
 
 This project demonstrates how to automate daily backups of Linux user data and system configuration using Bash scripts on an Ubuntu virtual machine. It's designed for IT Support professionals to practice scripting and data protection fundamentals in a lab environment.
 
